@@ -49,6 +49,7 @@ service_firewalld:
 reload_firewalld:
   cmd.wait:
     - name: 'firewall-cmd --reload'
+    - onlyif: 'systemctl is-active firewalld'
     - require:
       - service: service_firewalld
 
