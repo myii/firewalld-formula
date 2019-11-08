@@ -47,10 +47,9 @@ service_firewalld:
       - service: ip6tables # ensure it's stopped
 
 reload_firewalld:
-  cmd.wait:
-    - name: 'firewall-cmd --reload'
-    - require:
-      - service: service_firewalld
+  module.wait:
+    - name: service.reload
+    - m_name: {{ firewalld.service }}
 
 {% else %}
 
