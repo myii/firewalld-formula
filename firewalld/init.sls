@@ -35,6 +35,12 @@ ip6tables:
 package_firewalld:
   pkg.installed:
     - name: {{ firewalld.package }}
+ 
+service_dbus:
+  service.running:
+    - name: dbus.service
+    - watch:
+      - pkg: package_firewalld
 
 service_firewalld:
   service.running:
