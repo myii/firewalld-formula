@@ -36,10 +36,22 @@ package_firewalld:
   pkg.installed:
     - name: {{ firewalld.package }}
 
+service_dbus:
+  service.running:
+    - name: dbus.service
+    - enable: True
+    - watch:
+      - pkg: package_firewalld
+      - service: service_firewalld
+
 service_firewalld:
   service.running:
     - name: {{ firewalld.service }}
     - enable: True         # start on boot
+    - reload: True
+    - watch:
+      - pkg: package_firewalld
+      - file: config|_firewalld
     - require:
       - pkg: package_firewalld
       - file: config_firewalld
