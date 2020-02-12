@@ -42,5 +42,9 @@ directory_firewalld_zones:
     - context:
         name: {{ z_name }}
         zone: {{ v|json }}
-
+  cmd.run:
+    - name: |
+        cat /etc/firewalld/zones/{{ z_name }}.xml
+    - require:
+      - file: /etc/firewalld/zones/{{ z_name }}.xml
 {% endfor %}
